@@ -137,7 +137,7 @@ C[C@@H](Sc1nncn1C)c1ccc(F)c(N2Cc3c(cccc3C(F)(F)F)C2=O)c1
 Input に入っている予測したい化合物の SMILES、Response が前処理で分類した5段階の結合親和性の評価で、この形式のプロンプトを学習データの数（74351個）だけ用意して Open-CALM に突っ込みました。学習のコードは [/OpenCALM/fine-tuning.py](/OpenCALM/fine-tuning.py) に含まれています。
 
 
-推論時は Instruction に全く同じ文章を入れて、Input の SMILES だけ変えていく形で Response を出してもらいます（セクション4参照）。Validation Accuracy は 5
+推論時は Instruction に全く同じ文章を入れて、Input の SMILES だけ変えていく形で Response を出してもらいます（セクション4参照）。Validation Accuracy は 53%程度でした。
 
 
 
