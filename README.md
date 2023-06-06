@@ -28,7 +28,9 @@ ChatGPT に[初心者は何でドッキングすればいいか聞いた](/Chat/
 ## 既知リガンドのドッキング
 895個の既知リガンドについて、SMILES から3次元の pdbqt ファイルを作成し、Vina-GPU+（↓の論文）でドッキングスコアを計算しました。
 
-Ding, J. _et_ _al_. Vina-GPU 2.0: Further Accelerating AutoDock Vina and Its Derivatives with Graphics Processing Units.  _J_. _Chem_ _Inf_ _Model_. __2023__, _63_, 1982. https://doi.org/10.1021/acs.jcim.2c01504
+Ding, J. _et_ _al_. Vina-GPU 2.0: Further Accelerating AutoDock Vina and Its Derivatives with Graphics Processing Units.  _J_. _Chem_ _Inf_ _Model_. __2023__, _63_, 1982.
+
+https://doi.org/10.1021/acs.jcim.2c01504
 
 https://github.com/DeltaGroupNJUPT/Vina-GPU-2.0
 
@@ -37,12 +39,13 @@ Figure 5 を見ると、RIPK1 に対するドッキングで AutoDock Vina vs Vi
 3次元の pdbqt は open babel を使い、以下のコマンドで作りました。
 
 ```
-obabel -ismi path_to_SMILES/*.smi -opdbqt -m -p --gen3D）
+obabel -ismi path_to_SMILES/*.smi -opdbqt -m -p --gen3D
 ```
 
 ↓ オプションの説明 : open babel documentation から引用
 > -m: Produce multiple output files
- -p: Add hydrogens appropriate for pH
+
+> -p: Add hydrogens appropriate for pH
 
 
 ## ChEMBL の化合物をドッキングしてデータ数稼ぎ
@@ -52,14 +55,19 @@ obabel -ismi path_to_SMILES/*.smi -opdbqt -m -p --gen3D）
 Vina-GPU+ が原子数 130 以上の化合物が存在するとエラーを吐く仕様になっていたので、ChEMBL の化合物から原子数130以上のデータをカットしました。それでも謎のエラーが出てしまい、化合物を眺めているとデカい環状ペプチドみたいなやつがチラホラいたので、分子量 < 500 も追加したところ動いたので、結果的に上記のような前処理になりました。分子量については 600 くらいまで入れても良かったかもしれませんが、ここのエラー回避だけでかなり時間を費やしてしまっていたのでとりあえず 500 のまま進みました。
 
 原子数のカウントと分子量の計算部分のスクリプトは GPT-4 で生成しました。
+
 [原子数カウントのMarkdown](/Chat/atom_count.md)
+
 [分子量計算のMarkdown](/Chat/MolW.md)
 
 残った73456個の化合物は open babel で SMILES から pdbqt に変換し、Vina-GPU+ にぶち込みました。ChEMBL の方は1つのファイルに複数の化合物が入っているもの（塩とか）があり、これも Vina-GPU+ がエラーを吐いてきたので、pdbqt を作成するときのオプションに -r が必要でした。
+
 ```
 obabel -ismi path_to_SMILES/*.smi -opdbqt -m -p --gen3D -r
 ```
+
 スコアの分布は以下です。
+
 ![score_population.png](/images/score_population.png)
 
 
@@ -116,7 +124,9 @@ https://note.com/npaka/n/na5b8e6f749ce
 ## Open-CALM に与えるプロンプト作成
 
 突っ込んだプロンプトは以下の形式です。形式自体は先述の参考にした記事と全く同じで、中身が違うだけです。
+
 （参考にした記事の再掲）
+
 https://note.com/npaka/n/na5b8e6f749ce
 
 ```
@@ -144,7 +154,9 @@ Input に入っている予測したい化合物の SMILES、Response が前処�
 # 3. 生成モデルで化合物を仮想的に生成
 既知リガンドと部分的に似たような化合物を出せる生成モデルは無いかな～と思いながら探し、STONED という化合物生成モデルを見つけたので使ってみました。
 
-Nigam, A. _et_ _al_. Beyond Generative Models: Superfast Traversal, Optimization, Novelty, Exploration and Discovery (STONED) Algorithm for Molecules Using SELFIES. _Chem_. _Sci_. __2021__, _12_, 7079. https://doi.org/10.1039/d1sc00231g.
+Nigam, A. _et_ _al_. Beyond Generative Models: Superfast Traversal, Optimization, Novelty, Exploration and Discovery (STONED) Algorithm for Molecules Using SELFIES. _Chem_. _Sci_. __2021__, _12_, 7079. 
+
+https://doi.org/10.1039/d1sc00231g.
 
 https://github.com/aspuru-guzik-group/stoned-selfies
 
@@ -199,8 +211,7 @@ Response 以下の文章を抽出し、'非常に高い' になった化合物�
 
 https://www.jstage.jst.go.jp/article/medchem/19/2/19_7/_pdf
 
->極性結合である C‒F 結合が、タンパク質中のアミドカルボニル基、それに隣接するα位炭素あるいはアルギニン
-残基のグアニジル基との C‒F…C=O，C‒F…H‒Cαや C‒F…C（NH2）=NH のような相互作用の存在を2原子間距離がそれらのvan der Waals半径の和より小さいことに基づいて提唱している。
+>極性結合である C‒F 結合が、タンパク質中のアミドカルボニル基、それに隣接するα位炭素あるいはアルギニン残基のグアニジル基との C‒F…C=O，C‒F…H‒Cαや C‒F…C（NH2）=NH のような相互作用の存在を2原子間距離がそれらのvan der Waals半径の和より小さいことに基づいて提唱している。
 
 選んだ10個の化合物のうち、9個がエナミンのカタログ化合物、1個が STONED で生成した化合物でした。STONED の方は SELFIES を改変しているだけあって、すごく歪んでいそうな構造、空気・水に対して不安定そうな構造がたくさん生成されており、なかなか生き残ってくれませんでした。
 
@@ -211,7 +222,9 @@ https://www.jstage.jst.go.jp/article/medchem/19/2/19_7/_pdf
 [tanimoto係数計算のMarkdown](/Chat/calculate_tanimoto.md)
 
 10個の化合物について、返ってきた値は以下です。
+
 [0.28, 0.25, 0.31, 0.35, 0.30, 0.29, 0.36, 0.23, 0.29, 0.62]
+
 最後の化合物だけ STONED で生成したモノなのでちょっと高く出ており(0.62)、それ以外はEnamineのカタログ化合物です。
 
 
@@ -261,6 +274,7 @@ https://zinc20.docking.org/
 今回は興味があった STONED を生成モデルに使いましたが、LLM をSMILESの生成に使えるかどうかも軽く試してみました。
 
 プロンプトを以下の形式に変更して Fine-tuning しました。
+
 ```
 Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
 
@@ -275,6 +289,7 @@ SMILES
 ```
 
 推論時は以下の形式のプロンプトを与え、Response の続きを生成させることで、結合親和性が'非常に高い'に分類される化合物の SMILES の生成を試しました。
+
 ```
 Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
 
