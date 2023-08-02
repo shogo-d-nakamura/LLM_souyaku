@@ -167,7 +167,7 @@ STONED のざっくりとした説明：
 
 使ったコードは [/stoned-selfies/gen_median_from_triplet.py](/stoned-selfies/gen_median_from_triplet.py) です。STONED のレポジトリにこれと既知リガンドのSDFを追加すれば動きます。オリジナルのコードに以下の2点を追加しました。
 1. 生成された化合物について、SA score < 3.5 かつ QED > 0.6 の化合物だけ残す。
-2. 1番の足切りを通った化合物について、895個の既知リガンドとの tanimoto 係数を ECFP4 で計算していき、全てのリガンドに対して tanimoto < 0.7 を満たすものだけ残す。
+2. 1番の足切りを通った化合物について、895個の既知リガンドとの tanimoto 係数を ECFP4 で計算していき、全ての既知リガンドに対して tanimoto < 0.7 を満たすものだけ残す。
 
 2番のフィルターは、既知リガンドと近すぎる化合物を残してヒットしてもスゴ味がないので追加しました。
 
@@ -240,7 +240,7 @@ https://github.com/MolecularAI/aizynthfinder
 
 ![reaction_image](/images/reaction_image.png)
 
-緑枠で囲まれている化合物が commercialy available なモノで、ZINC20 の入手容易な化合物リスト（約1500万個）に含まれているものです。
+緑枠で囲まれている化合物が commercially available なモノで、ZINC20 の入手容易な化合物リスト（約1500万個）に含まれているものです。
 
 https://zinc20.docking.org/
 
