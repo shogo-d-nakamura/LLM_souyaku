@@ -271,6 +271,10 @@ https://zinc20.docking.org/
 
 結論：なんか作れそう
 
+## 提出した化合物
+ [/selection](/selection) のipynbにEnamine or STONED のキャプション付きで載せています。
+
+ 
 
 # おまけ
 他にも試しにやってみたことがあるので、成仏させるために書きます。
