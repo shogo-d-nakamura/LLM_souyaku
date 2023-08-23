@@ -28,7 +28,7 @@ ChatGPT に[初心者は何でドッキングすればいいか聞いた](/Chat/
 ## 既知リガンドのドッキング
 895個の既知リガンドについて、SMILES から3次元の pdbqt ファイルを作成し、Vina-GPU+（↓の論文）でドッキングスコアを計算しました。
 
-Ding, J. _et_ _al_. Vina-GPU 2.0: Further Accelerating AutoDock Vina and Its Derivatives with Graphics Processing Units.  _J_. _Chem_ _Inf_ _Model_. __2023__, _63_, 1982.
+Ding, J. _et_ _al_. Vina-GPU 2.0: Further Accelerating AutoDock Vina and Its Derivatives with Graphics Processing Units.  _J_. _Chem_. _Inf_. _Model_. __2023__, _63_, 1982.
 
 https://doi.org/10.1021/acs.jcim.2c01504
 
@@ -202,6 +202,14 @@ Response 以下の文章を抽出し、'非常に高い' になった化合物�
 5614個のうち、4776個がエナミンの化合物、838個がSTONEDで生成した化合物でした。エナミンの化合物が LLM の評価を通過した割合は 4776/460000 ≒ 1% ですが、STONEDで生成した化合物の方は 838/6807 ≒ 12% です。
 
 以上の操作により、Open-CALM で約47万化合物から5614個に絞り込めました。Open-CALM の推論は、5万化合物あたり11時間くらいかかりました（[generate.ipynb](/LLM_souyaku_rep/OpenCALM/generate.ipynb) に実行時間が出ている）。めちゃくちゃ待ちました。Vina より速いけど Vina-GPU+ より遅いです。
+
+
+5614個の化合物について、セクション2で定めたドッキングスコアのラベルを貼っていったところ以下のような分布でした。
+LLMがある程度結合親和性の高い化合物を選べていることが分かりました。
+
+
+![predicted_out.png](/images/predicted_out.png)
+
 
 
 # 5. 10個の化合物を選択
