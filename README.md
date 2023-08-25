@@ -205,7 +205,7 @@ Response 以下の文章を抽出し、'非常に高い' になった化合物�
 
 
 5614個の化合物について、セクション2で定めたドッキングスコアのラベルを貼っていったところ以下のような分布でした。
-LLMがある程度結合親和性の高い化合物を選べていることが分かりました。
+LLMがある程度結合親和性の高い化合物を選べていそうな気がします（Enamineのライブラリでヒストグラムを書かいて比較しないと何とも言えない）。
 
 
 ![predicted_out.png](/images/predicted_out.png)
@@ -244,11 +244,10 @@ https://jcheminf.biomedcentral.com/articles/10.1186/s13321-020-00472-1
 
 https://github.com/MolecularAI/aizynthfinder
 
-結果、市販の化合物まで分解することに成功しました。
+結果、ZINC20 の入手容易な化合物リスト（約1500万個）に収載されている化合物まで分解することに成功しました。
 
 ![reaction_image](/images/reaction_image.png)
 
-緑枠で囲まれている化合物が commercially available なモノで、ZINC20 の入手容易な化合物リスト（約1500万個）に含まれているものです。
 
 https://zinc20.docking.org/
 
